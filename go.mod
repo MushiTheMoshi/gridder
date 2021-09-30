@@ -1,8 +1,9 @@
-module github.com/johnha/gridder
+module github.com/shomali11/gridder
 
 go 1.14
 
 require (
+	github.com/anthonynsimon/bild v0.13.0
 	github.com/fogleman/gg v1.3.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/stretchr/testify v1.5.1

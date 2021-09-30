@@ -10,15 +10,15 @@ import (
 func main() {
 	imageConfig := gridder.ImageConfig{
 		Width:  500,
-		Height: 500,
+		Height: 1000,
 		Name:   "example6.png",
 	}
 	gridConfig := gridder.GridConfig{
-		Rows:              4,
-		Columns:           4,
-		MarginWidth:       30,
-		LineStrokeWidth:   2,
-		BorderStrokeWidth: 4,
+		Rows:              7,
+		Columns:           3,
+		MarginWidth:       1,
+		LineStrokeWidth:   0.4,
+		BorderStrokeWidth: 0.4,
 	}
 
 	grid, err := gridder.New(imageConfig, gridConfig)
@@ -26,11 +26,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	grid.DrawLine(0, 0, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0})
-	grid.DrawLine(0, 0, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0, Rotate: 90})
-	grid.DrawLine(0, 3, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0, StrokeWidth: 25})
-	grid.DrawLine(2, 1, gridder.LineConfig{Length: 90, Color: color.RGBA{R: 255 / 2, A: 255 / 2}, Rotate: 45})
-	grid.DrawLine(2, 1, gridder.LineConfig{Length: 90, Color: color.RGBA{R: 255 / 2, A: 255 / 2}, Rotate: 135})
-	grid.DrawLine(3, 3, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 5})
+	grid.DrawImage(1, 1, gridder.ImageConfig1{Length: 1, Color: color.Black, File: "./bincho.png"})
+	grid.DrawImage(2, 2, gridder.ImageConfig1{Length: 2, Color: color.Black, File: "./bincho.png", Rotate: 27})
+	grid.DrawImage(1, 2, gridder.ImageConfig1{Length: 3, Color: color.Black, File: "./bincho.png"})
+	grid.DrawImage(2, 1, gridder.ImageConfig1{Length: 40, Color: color.Black, File: "./bincho.png"})
 	grid.SavePNG()
 }
