@@ -10,6 +10,7 @@ import (
 
 	"github.com/fogleman/gg"
 	"golang.org/x/image/font"
+  "github.com/anthonynsimon/bild/transform"
 )
 
 var (
@@ -198,6 +199,9 @@ func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) e
 
 	m := ImageLayout{imgData}
 
+	result := transform.Resize(m.Image, 80, 50, transform.Linear)
+	// fmt.Printf("%s", x)
+
 	center := g.getCellCenter(row, column)
 	length := ImageConfig.GetLength()
 
@@ -207,10 +211,11 @@ func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) e
 	g.ctx.Push()
 
 	g.ctx.RotateAbout(gg.Radians(ImageConfig.GetRotate()), center.X, center.Y)
-	g.ctx.DrawImage(m.Image, x1, y)
-	// g.ctx.SetLineWidth(ImageConfig.GetStrokeWidth())
-	// g.ctx.SetColor(ImageConfig.GetColor())
-	// g.ctx.Stroke()
+	g.ctx.DrawImage(result , x1, y)
+	// g.ctx.DrawImage(m.Image, x1, y)
+	g.ctx.SetLineWidth(ImageConfig.GetStrokeWidth())
+	g.ctx.SetColor(ImageConfig.GetColor())
+	g.ctx.Stroke()
 	g.ctx.Pop()
 	return nil
 }
