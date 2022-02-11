@@ -2,8 +2,11 @@ package gridder
 
 import (
 	"errors"
+	"image"
 	"image/color"
 	"io"
+	"log"
+	"os"
 
 	"github.com/fogleman/gg"
 	"golang.org/x/image/font"
@@ -161,6 +164,53 @@ func (g *Gridder) DrawPath(row1 int, column1 int, row2 int, column2 int, pathCon
 	g.ctx.SetLineWidth(pathConfig.GetStrokeWidth())
 	g.ctx.DrawLine(center1.X, center1.Y, center2.X, center2.Y)
 	g.ctx.Stroke()
+	g.ctx.Pop()
+	return nil
+}
+
+type ImageLayout struct {
+	Image image.Image
+}
+
+// Draw image
+func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) error {
+
+	err := g.verifyInBounds(row, column)
+	if err != nil {
+		return err
+	}
+
+	ImageConfig := getFirstImageConfig(ImageConfigs...)
+	imgx := ImageConfig.GetFile()
+	if err != nil {
+		log.Fatalf("no file provided: %s", err)
+	}
+	img, err := os.Open(imgx)
+	if err != nil {
+		log.Fatalf("failed to open file: %s", err)
+	}
+
+	defer img.Close()
+	imgData, _, err := image.Decode(img)
+	if err != nil {
+		log.Fatalf("failed to decode file: %s", err)
+	}
+
+	m := ImageLayout{imgData}
+
+	center := g.getCellCenter(row, column)
+	length := ImageConfig.GetLength()
+
+	x1 := int(center.X - length/2)
+	y := int(center.Y)
+
+	g.ctx.Push()
+
+	g.ctx.RotateAbout(gg.Radians(ImageConfig.GetRotate()), center.X, center.Y)
+	g.ctx.DrawImage(m.Image, x1, y)
+	// g.ctx.SetLineWidth(ImageConfig.GetStrokeWidth())
+	// g.ctx.SetColor(ImageConfig.GetColor())
+	// g.ctx.Stroke()
 	g.ctx.Pop()
 	return nil
 }

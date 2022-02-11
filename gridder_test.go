@@ -2,6 +2,7 @@ package gridder
 
 import (
 	"bytes"
+	"image"
 	"image/color"
 	"testing"
 
@@ -62,6 +63,21 @@ func TestDrawLine(t *testing.T) {
 	assert.NotNil(t, err)
 
 	err = gridder.DrawLine(0, 0)
+	assert.Nil(t, err)
+}
+
+type ImageLayer struct {
+	Image image.Image
+}
+
+func TestDrawImage(t *testing.T) {
+	gridder, err := New(ImageConfig{}, GridConfig{Rows: 1, Columns: 1})
+	assert.Nil(t, err)
+
+	err = gridder.DrawImage(-1, -1)
+	assert.NotNil(t, err)
+
+	err = gridder.DrawImage(0, 0)
 	assert.Nil(t, err)
 }
 

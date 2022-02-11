@@ -14,12 +14,16 @@ const (
 	defaultLineLength      = 10.0
 	defaultLineStrokeWidth = 1.0
 
+	defaultImageLength      = 10.0
+	defaultImageStrokeWidth = 1.0
+
 	defaultCircleRadius      = 10.0
 	defaultCircleStrokeWidth = 1.0
 
 	defaultRectangleWidth       = 20.0
 	defaultRectangleHeight      = 20.0
 	defaultRectangleStrokeWidth = 1.0
+	defaultImageFile            = "./bincho.png"
 )
 
 var (
@@ -29,6 +33,7 @@ var (
 
 	defaultStringColor    = color.Gray{}
 	defaultLineColor      = color.Gray{}
+	defaultImageColor     = color.Gray{}
 	defaultCircleColor    = color.Gray{}
 	defaultRectangleColor = color.NRGBA{R: 0, G: 0, B: 0, A: 255 / 2}
 )
@@ -68,9 +73,12 @@ type GridConfig struct {
 	MarginWidth       int
 	LineDashes        float64
 	LineStrokeWidth   float64
+	ImageDashes       float64
+	ImageStrokeWidth  float64
 	BorderDashes      float64
 	BorderStrokeWidth float64
 	LineColor         color.Color
+	ImageColor        color.Color
 	BorderColor       color.Color
 	BackgroundColor   color.Color
 }
@@ -230,6 +238,57 @@ func (g *LineConfig) GetDashes() float64 {
 	return g.Dashes
 }
 
+// ImageConfig Image Configuration
+type ImageConfig1 struct {
+	Length      float64
+	Rotate      float64
+	StrokeWidth float64
+	Dashes      float64
+	File        string
+	Color       color.Color
+}
+
+// GetLength gets length
+func (g *ImageConfig1) GetLength() float64 {
+	if g.Length <= 0 {
+		return defaultImageLength
+	}
+	return g.Length
+}
+
+// GetRotate gets rotation
+func (g *ImageConfig1) GetRotate() float64 {
+	return g.Rotate
+}
+
+// GetStrokeWidth gets stroke width
+func (g *ImageConfig1) GetStrokeWidth() float64 {
+	if g.StrokeWidth <= 0 {
+		return defaultImageStrokeWidth
+	}
+	return g.StrokeWidth
+}
+
+// GetColor gets color
+func (g *ImageConfig1) GetColor() color.Color {
+	if g.Color == nil {
+		return defaultImageColor
+	}
+	return g.Color
+}
+
+// GetDashes gets dashes
+func (g *ImageConfig1) GetDashes() float64 {
+	return g.Dashes
+}
+
+func (g *ImageConfig1) GetFile() string {
+	if g.File == "" {
+		return defaultImageFile
+	}
+	return g.File
+}
+
 // CircleConfig Grid Circle Configuration
 type CircleConfig struct {
 	Radius      float64
@@ -374,6 +433,13 @@ func getFirstPathConfig(configs ...PathConfig) PathConfig {
 func getFirstLineConfig(configs ...LineConfig) LineConfig {
 	if len(configs) == 0 {
 		return LineConfig{}
+	}
+	return configs[0]
+}
+
+func getFirstImageConfig(configs ...ImageConfig1) ImageConfig1 {
+	if len(configs) == 0 {
+		return ImageConfig1{}
 	}
 	return configs[0]
 }

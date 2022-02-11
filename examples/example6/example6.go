@@ -26,11 +26,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	grid.DrawLine(0, 0, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0})
-	grid.DrawLine(0, 0, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0, Rotate: 90})
-	grid.DrawLine(0, 3, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 0, StrokeWidth: 25})
-	grid.DrawLine(2, 1, gridder.LineConfig{Length: 90, Color: color.RGBA{R: 255 / 2, A: 255 / 2}, Rotate: 45})
-	grid.DrawLine(2, 1, gridder.LineConfig{Length: 90, Color: color.RGBA{R: 255 / 2, A: 255 / 2}, Rotate: 135})
-	grid.DrawLine(3, 3, gridder.LineConfig{Length: 60, Color: color.Black, Dashes: 5})
+	grid.DrawImage(0, 0, gridder.ImageConfig1{Length: 1, Color: color.Black, File: "./bincho.png"})
+	grid.DrawImage(0, 0, gridder.ImageConfig1{Length: 2, Color: color.Black, File: "./bincho.png", Rotate: 90})
+	grid.DrawImage(0, 3, gridder.ImageConfig1{Length: 3, Color: color.Black, File: "./bincho.png", StrokeWidth: 25})
+	grid.DrawImage(3, 3, gridder.ImageConfig1{Length: 4, Color: color.Black, File: "./bincho.png"})
 	grid.SavePNG()
 }
