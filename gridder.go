@@ -7,7 +7,6 @@ import (
 	"io"
 	"log"
 	"os"
-
 	"github.com/fogleman/gg"
 	"golang.org/x/image/font"
   "github.com/anthonynsimon/bild/transform"
@@ -199,20 +198,20 @@ func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) e
 
 	m := ImageLayout{imgData}
 
-	result := transform.Resize(m.Image, 80, 50, transform.Linear)
+  cellWidth, cellHeight := g.getCellDimensions() 
+	result := transform.Resize(m.Image, int(cellWidth), int(cellHeight), transform.Linear)
 	// fmt.Printf("%s", x)
 
-	center := g.getCellCenter(row, column)
-	length := ImageConfig.GetLength()
+	center := g.getCellPoint(row, column)
+	// length := ImageConfig.GetLength()
 
-	x1 := int(center.X - length/2)
+	x1 := int(center.X)
 	y := int(center.Y)
 
 	g.ctx.Push()
 
 	g.ctx.RotateAbout(gg.Radians(ImageConfig.GetRotate()), center.X, center.Y)
 	g.ctx.DrawImage(result , x1, y)
-	// g.ctx.DrawImage(m.Image, x1, y)
 	g.ctx.SetLineWidth(ImageConfig.GetStrokeWidth())
 	g.ctx.SetColor(ImageConfig.GetColor())
 	g.ctx.Stroke()
@@ -362,6 +361,17 @@ func (g *Gridder) getCellCenter(row, column int) *gg.Point {
 
 	x := float64(column)*(gridWidth/columns) + cellWidth/2
 	y := float64(row)*(gridHeight/rows) + cellHeight/2
+	return &gg.Point{X: x, Y: y}
+}
+
+func (g *Gridder) getCellPoint(row, column int) *gg.Point {
+	columns := float64(g.gridConfig.GetColumns())
+	rows := float64(g.gridConfig.GetRows())
+
+	gridWidth, gridHeight := g.getGridDimensions()
+
+	x := float64(column)*(gridWidth/columns) 
+	y := float64(row)*(gridHeight/rows) 
 	return &gg.Point{X: x, Y: y}
 }
 

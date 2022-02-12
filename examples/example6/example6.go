@@ -27,7 +27,7 @@ func main() {
 	}
 
 	grid.DrawImage(1, 1, gridder.ImageConfig1{Length: 1, Color: color.Black, File: "./bincho.png"})
-	grid.DrawImage(2, 2, gridder.ImageConfig1{Length: 2, Color: color.Black, File: "./bincho.png", Rotate: 27})
+	grid.DrawImage(2, 2, gridder.ImageConfig1{Length: 2, Color: color.Black, File: "./bincho.png", Rotate: 2})
 	grid.DrawImage(1, 2, gridder.ImageConfig1{Length: 3, Color: color.Black, File: "./bincho.png"})
 	grid.DrawImage(2, 1, gridder.ImageConfig1{Length: 40, Color: color.Black, File: "./bincho.png"})
 	grid.SavePNG()
