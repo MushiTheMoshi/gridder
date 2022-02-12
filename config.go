@@ -15,7 +15,6 @@ const (
 	defaultLineStrokeWidth = 1.0
 
 	defaultImageLength      = 10.0
-	defaultImageStrokeWidth = 1.0
 
 	defaultCircleRadius      = 10.0
 	defaultCircleStrokeWidth = 1.0
@@ -240,33 +239,14 @@ func (g *LineConfig) GetDashes() float64 {
 
 // ImageConfig Image Configuration
 type ImageConfig1 struct {
-	Length      float64
 	Rotate      float64
-	StrokeWidth float64
-	Dashes      float64
 	File        string
 	Color       color.Color
-}
-
-// GetLength gets length
-func (g *ImageConfig1) GetLength() float64 {
-	if g.Length <= 0 {
-		return defaultImageLength
-	}
-	return g.Length
 }
 
 // GetRotate gets rotation
 func (g *ImageConfig1) GetRotate() float64 {
 	return g.Rotate
-}
-
-// GetStrokeWidth gets stroke width
-func (g *ImageConfig1) GetStrokeWidth() float64 {
-	if g.StrokeWidth <= 0 {
-		return defaultImageStrokeWidth
-	}
-	return g.StrokeWidth
 }
 
 // GetColor gets color
@@ -275,11 +255,6 @@ func (g *ImageConfig1) GetColor() color.Color {
 		return defaultImageColor
 	}
 	return g.Color
-}
-
-// GetDashes gets dashes
-func (g *ImageConfig1) GetDashes() float64 {
-	return g.Dashes
 }
 
 func (g *ImageConfig1) GetFile() string {

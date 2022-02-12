@@ -200,10 +200,8 @@ func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) e
 
   cellWidth, cellHeight := g.getCellDimensions() 
 	result := transform.Resize(m.Image, int(cellWidth), int(cellHeight), transform.Linear)
-	// fmt.Printf("%s", x)
 
 	center := g.getCellPoint(row, column)
-	// length := ImageConfig.GetLength()
 
 	x1 := int(center.X)
 	y := int(center.Y)
@@ -212,9 +210,7 @@ func (g *Gridder) DrawImage(row int, column int, ImageConfigs ...ImageConfig1) e
 
 	g.ctx.RotateAbout(gg.Radians(ImageConfig.GetRotate()), center.X, center.Y)
 	g.ctx.DrawImage(result , x1, y)
-	g.ctx.SetLineWidth(ImageConfig.GetStrokeWidth())
 	g.ctx.SetColor(ImageConfig.GetColor())
-	g.ctx.Stroke()
 	g.ctx.Pop()
 	return nil
 }
